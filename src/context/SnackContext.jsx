@@ -55,12 +55,30 @@ const SnackProvider = ({ children }) => {
     let sortedByName = [];
     if (state.sortNameAsc) {
       sortedByName = state.filteredSnacks.sort(
-        (a, b) => a.product_name - b.product_name
+        (a, b) => {
+          let x = a.product_name.toLowerCase();
+          let y = b.product_name.toLowerCase();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
+        } //a.product_name - b.product_name
       );
     } else {
-      sortedByName = state.filteredSnacks.sort(
-        (a, b) => b.product_name - a.product_name
-      );
+      sortedByName = state.filteredSnacks.sort((a, b) => {
+        let x = b.product_name.toLowerCase();
+        let y = a.product_name.toLowerCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
     }
     dispatch({
       type: "UPDATE_FILTERED_SNACKS",
@@ -71,7 +89,45 @@ const SnackProvider = ({ children }) => {
       },
     });
   };
-  const sortByIngredients = () => {};
+  const sortByIngredients = () => {
+    let sortedByIngred = [];
+    if (state.sortIngredAsc) {
+      sortedByIngred = state.filteredSnacks.sort(
+        (a, b) => {
+          let x = a.ingredients[0].toLowerCase();
+          let y = b.ingredients[0].toLowerCase();
+          if (x < y) {
+            return -1;
+          }
+          if (x > y) {
+            return 1;
+          }
+          return 0;
+        } //a.ingredients[0] - b.ingredients[0]
+      );
+    } else {
+      sortedByIngred = state.filteredSnacks.sort((a, b) => {
+        let x = b.ingredients[0].toLowerCase();
+        let y = a.ingredients[0].toLowerCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    dispatch({
+      type: "UPDATE_FILTERED_SNACKS",
+      payload: {
+        data: sortedByIngred,
+        sortKey: "sortIngredAsc",
+        sortValue: !state.sortIngredAsc,
+      },
+    });
+  };
+
   const sortByCalories = () => {
     let sortedByCalories = [];
     if (state.sortCaloriesAsc) {
@@ -92,7 +148,36 @@ const SnackProvider = ({ children }) => {
       },
     });
   };
-  const sortByWeight = () => {};
+
+  const sortByWeight = () => {
+    let sortedByWeight = [];
+    if (state.sortWeightAsc) {
+      sortedByWeight = state.filteredSnacks.sort((a, b) => {
+        console.log(
+          Number(a.product_weight.substring(0, a.product_weight.length - 1)),
+          "                ==jdfnjkdf"
+        );
+        return (
+          Number(a.product_weight.substring(0, a.product_weight.length - 1)) -
+          Number(b.product_weight.substring(0, b.product_weight.length - 1))
+        );
+      });
+    } else {
+      sortedByWeight = state.filteredSnacks.sort(
+        (a, b) =>
+          Number(b.product_weight.substring(0, b.product_weight.length - 1)) -
+          Number(a.product_weight.substring(0, a.product_weight.length - 1))
+      );
+    }
+    dispatch({
+      type: "UPDATE_FILTERED_SNACKS",
+      payload: {
+        data: sortedByWeight,
+        sortKey: "sortWeightAsc",
+        sortValue: !state.sortWeightAsc,
+      },
+    });
+  };
   console.log(state, "-======ncontext");
 
   return (
