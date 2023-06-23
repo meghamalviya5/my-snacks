@@ -1,4 +1,5 @@
 export const snacksReducer = (state, action) => {
+  console.log("inreducer");
   switch (action.type) {
     case "SEARCH_SNACKS":
       const updatedSnacks = state.allSnacks.filter((snack) => {
@@ -21,7 +22,11 @@ export const snacksReducer = (state, action) => {
       };
 
     case "UPDATE_FILTERED_SNACKS":
-      return { ...state, filteredSnacks: action.payload };
+      return {
+        ...state,
+        filteredSnacks: action.payload.data,
+        [action.payload.sortKey]: action.payload.sortValue,
+      };
     default:
       return { state };
   }

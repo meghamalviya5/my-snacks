@@ -9,19 +9,38 @@ const SnackProvider = ({ children }) => {
     allSnacks: snacks,
     filteredSnacks: snacks,
     searchInput: "",
+    sortIdAsc: true,
+    sortNameAsc: true,
+    sortPriceAsc: true,
+    sortCaloriesAsc: true,
+    sortIngredAsc: true,
+    sortWeightAsc: true,
   };
 
   const [state, dispatch] = useReducer(snacksReducer, initialState);
 
   const sortById = () => {
-    const sortedById = state.filteredSnacks.sort((a, b) => a.id - b.id);
-    dispatch({ type: "UPDATE_FILTERED_SNACKS", payload: sortById });
+    let sortedById = [];
+    if (state.sortIdAsc) {
+      sortedById = state.filteredSnacks.sort((a, b) => a.id - b.id);
+    } else {
+      sortedById = state.filteredSnacks.sort((a, b) => b.id - a.id);
+    }
+    dispatch({
+      type: "UPDATE_FILTERED_SNACKS",
+      payload: {
+        data: sortedById,
+        sortKey: "sortIdAsc",
+        sortValue: !state.sortIdAsc,
+      },
+    });
   };
   const sortByPrice = () => {};
   const sortByName = () => {};
   const sortByIngredients = () => {};
   const sortByCalories = () => {};
   const sortByWeight = () => {};
+  console.log(state, "-======ncontext");
 
   return (
     <SnackContext.Provider
