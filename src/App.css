@@ -1,10 +1,5 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  /* text-align: center; */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -26,6 +21,28 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.snack-table,
+tr,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.snack-table {
+  margin-top: 10px;
+}
+
+input {
+  width: 300px;
+}
+
+button {
+  all: unset;
+  border: none;
+  cursor: pointer;
 }
 
 @keyframes App-logo-spin {
